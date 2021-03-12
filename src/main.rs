@@ -27,7 +27,7 @@ fn encrypt(input: Vec<u8>, key: Vec<u8>) -> Vec<u8> {
     input
         .iter()
         .zip(key.iter())
-        .map(|(a, b)| a + b % 26)
+        .map(|(a, b)| (a + b).rem_euclid(26))
         .collect()
 }
 
@@ -109,10 +109,10 @@ fn main() {
     if matches.is_present("encrypt") {
         let e = encrypt(l, k);
         let o = from_run(e);
-        println!("encrypted: [{}]", o);
-    } else if matches.is_present("decrypt") {
+        println!("Encrypted: {}", o);
+    } else {
         let d = decrypt(l, k);
         let o = from_run(d);
-        println!("decrypted: [{}]", o);
+        println!("Decrypted: {}", o);
     }
 }
