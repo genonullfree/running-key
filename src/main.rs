@@ -22,6 +22,15 @@ fn from_run(input: Vec<u8>) -> String {
         .collect::<String>()
         .to_string()
 }
+
+fn encrypt(input: Vec<u8>, key: Vec<u8>) -> Vec<u8> {
+    input
+        .iter()
+        .zip(key.iter())
+        .map(|(a, b)| a + b % 26)
+        .collect()
+}
+
 fn decrypt(input: Vec<u8>, key: Vec<u8>) -> Vec<u8> {
     input
         .iter()
@@ -98,7 +107,9 @@ fn main() {
     let k = to_run(&key);
 
     if matches.is_present("encrypt") {
-        println!("ToDo");
+        let e = encrypt(l, k);
+        let o = from_run(e);
+        println!("encrypted: [{}]", o);
     } else if matches.is_present("decrypt") {
         let d = decrypt(l, k);
         let o = from_run(d);
